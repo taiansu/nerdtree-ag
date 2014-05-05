@@ -44,9 +44,10 @@ call NERDTreeAddMenuItem({
 function! NERDTreeAgCppFiles()
     let cd = g:NERDTreeDirNode.GetSelected().path.str()
     let include_files = "\\.(c|h|cpp|cc|hpp|hh)$"
-    let pattern = input("(CPP FILES) >>> ")
+    let pattern = input("directory ".cd."\n(CPP FILES) >>> ")
     if pattern == ''
         return
     endif
     exec "Ag! -i -G '".include_files."' '".pattern."' ".cd
+    set nospell
 endfunction
