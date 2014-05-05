@@ -32,12 +32,12 @@ function! NERDTreeAg()
     if pattern == ''
         return
     endif
-    exec "Ag! ".pattern." ".cd
+    exec "Ag! '".pattern."' ".cd
 endfunction
 
 " ============================================================================
 call NERDTreeAddMenuItem({
-    \ 'text': '(s)earch dir only cpp/hpp/cc/hh files',
+    \ 'text': '(s)earch dir only cpp/hpp/cc/hh files (case insensitive)',
     \ 'shortcut': 's',
     \ 'callback': 'NERDTreeAgCppFiles' })
 
@@ -48,5 +48,5 @@ function! NERDTreeAgCppFiles()
     if pattern == ''
         return
     endif
-    exec "Ag! -G '".include_files."' ".pattern." ".cd
+    exec "Ag! -i -G '".include_files."' '".pattern."' ".cd
 endfunction
