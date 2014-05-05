@@ -19,21 +19,34 @@ endif
 
 let g:loaded_nerdtree_ag = 1
 
-" add the new menu item via NERD_Tree's API
+" ============================================================================
 call NERDTreeAddMenuItem({
-    \ 'text': '(s)earch directory',
-    \ 'shortcut': 's',
+    \ 'text': 'search directory all (f)iles',
+    \ 'shortcut': 'f',
     \ 'callback': 'NERDTreeAg' })
 
 function! NERDTreeAg()
-    " get the current dir from NERDTree
     let cd = g:NERDTreeDirNode.GetSelected().path.str()
 
-    " get the pattern
-    let pattern = input("Enter the pattern: ")
+    let pattern = input("(FILES) >>> ")
     if pattern == ''
-        echo 'Maybe another time...'
         return
     endif
     exec "Ag! ".pattern." ".cd
+endfunction
+
+" ============================================================================
+call NERDTreeAddMenuItem({
+    \ 'text': '(s)earch dir only cpp/hpp/cc/hh files',
+    \ 'shortcut': 's',
+    \ 'callback': 'NERDTreeAgCppFiles' })
+
+function! NERDTreeAgCppFiles()
+    let cd = g:NERDTreeDirNode.GetSelected().path.str()
+    let include_files = "\\.(c|h|cpp|cc|hpp|hh)$"
+    let pattern = input("(CPP FILES) >>> ")
+    if pattern == ''
+        return
+    endif
+    exec "Ag! -G '".include_files."' ".pattern." ".cd
 endfunction
