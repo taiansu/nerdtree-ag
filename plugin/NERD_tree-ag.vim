@@ -37,14 +37,30 @@ endfunction
 
 " ============================================================================
 call NERDTreeAddMenuItem({
-    \ 'text': '(s)earch dir only cpp/hpp/cc/hh files (case insensitive)',
-    \ 'shortcut': 's',
+    \ 'text': '(sc)earch dir only cpp/hpp/cc/hh/py files (case insensitive)',
+    \ 'shortcut': 'sc',
     \ 'callback': 'NERDTreeAgCppFiles' })
 
 function! NERDTreeAgCppFiles()
     let cd = g:NERDTreeDirNode.GetSelected().path.str()
-    let include_files = "\\.(c|h|cpp|cc|hpp|hh)$"
+    let include_files = "\\.(c|h|cpp|cc|hpp|hh|py)$"
     let pattern = input("directory ".cd."\n(CPP FILES) >>> ")
+    if pattern == ''
+        return
+    endif
+    exec "Ag! -i -G '".include_files."' '".pattern."' ".cd
+    set nospell
+endfunction
+
+call NERDTreeAddMenuItem({
+    \ 'text': '(st)earch dir only latex files (case insensitive)',
+    \ 'shortcut': 'st',
+    \ 'callback': 'NERDTreeAgTexFiles' })
+
+function! NERDTreeAgTexFiles()
+    let cd = g:NERDTreeDirNode.GetSelected().path.str()
+    let include_files = "\\.(tex)$"
+    let pattern = input("directory ".cd."\n(TEX FILES) >>> ")
     if pattern == ''
         return
     endif
