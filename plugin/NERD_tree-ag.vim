@@ -19,21 +19,51 @@ endif
 
 let g:loaded_nerdtree_ag = 1
 
-" add the new menu item via NERD_Tree's API
+" ============================================================================
 call NERDTreeAddMenuItem({
-    \ 'text': '(s)earch directory',
-    \ 'shortcut': 's',
+    \ 'text': 'search directory all (f)iles',
+    \ 'shortcut': 'f',
     \ 'callback': 'NERDTreeAg' })
 
 function! NERDTreeAg()
-    " get the current dir from NERDTree
     let cd = g:NERDTreeDirNode.GetSelected().path.str()
 
-    " get the pattern
-    let pattern = input("Enter the pattern: ")
+    let pattern = input("(FILES) >>> ")
     if pattern == ''
-        echo 'Maybe another time...'
         return
     endif
-    exec "Ag! ".pattern." ".cd
+    exec "Ag! '".pattern."' ".cd
+endfunction
+
+" ============================================================================
+call NERDTreeAddMenuItem({
+    \ 'text': '(s)earch dir only cpp/hpp/cc/hh/py files (case insensitive)',
+    \ 'shortcut': 's',
+    \ 'callback': 'NERDTreeAgCppFiles' })
+
+function! NERDTreeAgCppFiles()
+    let cd = g:NERDTreeDirNode.GetSelected().path.str()
+    let include_files = "\\.(c|h|cpp|cc|hpp|hh|py)$"
+    let pattern = input("directory ".cd."\n(CPP FILES) >>> ")
+    if pattern == ''
+        return
+    endif
+    exec "Ag! -i -G '".include_files."' '".pattern."' ".cd
+    set nospell
+endfunction
+
+call NERDTreeAddMenuItem({
+    \ 'text': '(t)search dir only latex files (case insensitive)',
+    \ 'shortcut': 't',
+    \ 'callback': 'NERDTreeAgTexFiles' })
+
+function! NERDTreeAgTexFiles()
+    let cd = g:NERDTreeDirNode.GetSelected().path.str()
+    let include_files = "\\.(tex)$"
+    let pattern = input("directory ".cd."\n(TEX FILES) >>> ")
+    if pattern == ''
+        return
+    endif
+    exec "Ag! -i -G '".include_files."' '".pattern."' ".cd
+    set nospell
 endfunction
