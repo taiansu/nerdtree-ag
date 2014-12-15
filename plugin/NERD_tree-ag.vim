@@ -37,8 +37,8 @@ endfunction
 
 " ============================================================================
 call NERDTreeAddMenuItem({
-    \ 'text': '(sc)earch dir only cpp/hpp/cc/hh/py files (case insensitive)',
-    \ 'shortcut': 'sc',
+    \ 'text': '(s)earch dir only cpp/hpp/cc/hh/py files (case insensitive)',
+    \ 'shortcut': 's',
     \ 'callback': 'NERDTreeAgCppFiles' })
 
 function! NERDTreeAgCppFiles()
@@ -53,8 +53,8 @@ function! NERDTreeAgCppFiles()
 endfunction
 
 call NERDTreeAddMenuItem({
-    \ 'text': '(st)earch dir only latex files (case insensitive)',
-    \ 'shortcut': 'st',
+    \ 'text': '(t)search dir only latex files (case insensitive)',
+    \ 'shortcut': 't',
     \ 'callback': 'NERDTreeAgTexFiles' })
 
 function! NERDTreeAgTexFiles()
